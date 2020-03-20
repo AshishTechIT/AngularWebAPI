@@ -1,0 +1,100 @@
+<p>candidates works!</p>
+<div class="container">
+
+    <mat-card>
+      <mat-toolbar color="accent">
+        <div align="center" style="color:white;text-align: right;">
+    
+          CRUD operation in Angular 7 using Web api and Sql Database
+        </div>
+       
+      </mat-toolbar>
+    <br><br>
+      <mat-card-content>
+        <form [formGroup]="candForm" (ngSubmit)="onFormSubmit(candForm.value)">
+    
+                <table>
+                  <tr>
+                    <td class="tbl1">
+                      <mat-form-field class="demo-full-width">
+                        <input formControlName="Name" matTooltip="Enter Candidate Name" matInput placeholder="Candidate Name">
+                      </mat-form-field>
+                      <mat-error>
+                        <span *ngIf="!candForm.get('Name').value && candForm.get('Name').touched"></span>
+                      </mat-error>
+                    </td>
+                    <td class="tbl1">
+                      <mat-form-field class="demo-full-width">
+                        <input matInput [matDatepicker]="picker" matTooltip="Enter Date Of Birth" formControlName="DateOfBirth" placeholder="Choose Date Of Birth">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <mat-error>
+                        <span *ngIf="!candForm.get('DateOfBirth').value && candForm.get('DateOfBirth').touched"></span>
+                      </mat-error>
+                    </td>
+                    <td class="tbl1">
+                      <mat-form-field class="demo-full-width">
+                        <input formControlName="CandidateDomain" matTooltip="Enter Candidate Domain" matInput placeholder="Candidate Domain">
+                      </mat-form-field>
+                      <mat-error>
+                        <span *ngIf="!candForm.get('CandidateDomain').value && candForm.get('CandidateDomain').touched"></span>
+                      </mat-error>
+                    </td>
+    
+                  </tr>
+                  <tr>
+                    
+                    <td class="tbl1">
+                      <mat-form-field class="demo-full-width">
+                        <input matTooltip="Enter Candidate Profile Doc" formControlName="CandidateProfileDoc" matInput placeholder="Candidate Profile Doc">
+                      </mat-form-field>
+                      <mat-error>
+                        <span *ngIf="!candForm.get('CandidateProfileDoc').value && candForm.get('CandidateProfileDoc').touched"></span>
+                      </mat-error>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td  class="content-center">
+                      <button type="submit" mat-raised-button color="accent" matTooltip="Click Submit Button" [disabled]="!candForm.valid">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <button type="reset" mat-raised-button color="accent" matTooltip="Click Reset Button" (click)="resetForm()">Reset</button>
+                    </td>
+                    <td>
+                      <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">
+                        {{massage}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+    <br><br>
+          <table class="table" >
+              <tr ngclass="btn-primary">
+                <th class="tbl2">Candidate Name</th>
+                <th class="tbl2">Date Of Birth</th>
+                <th class="tbl2">Candidate Domain</th>
+                <th class="tbl2">Candidate Profile Doc</th>
+                <th class="tbl2" *ngIf="userService.roleMatch(['Admin'])">Edit</th>
+                <th class="tbl2" *ngIf="userService.roleMatch(['Admin'])">Delete</th>
+              </tr>
+              <tr *ngFor="let employee of allEmployees | async">
+                <td class="tbl2">{{candidate.CandidateName}}</td>
+                <td class="tbl2">{{candidate.CandidateDOB | date }}</td>
+                <td class="tbl2">{{candidate.CandidateDomain}}</td>
+                <td class="tbl2">{{candidate.CandidateProfileDoc}}</td>
+                <td class="tbl2" *ngIf="userService.roleMatch(['Admin'])">
+                  <button type="button" class="btn btn-info" matTooltip="Click Edit Button" (click)="loadEmployeeToEdit(employee.EmpId)">Edit</button>
+                </td>
+                <td class="tbl2" *ngIf="userService.roleMatch(['Admin'])">
+                  <button type="button" class="btn btn-danger" matTooltip="Click Delete Button" (click)="deleteEmployee(employee.EmpId)">Delete</button>
+                </td>
+              </tr>
+    
+            </table>
+    
+        </form>
+      </mat-card-content>
+    </mat-card>
+    
+    </div>

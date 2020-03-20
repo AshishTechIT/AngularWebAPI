@@ -1,0 +1,17 @@
+<p>display-list works!</p>
+<table class="table table-sm table-hover">
+    <tr *ngFor="let candidate of candidateService.CandidateList">
+      <td>{{candidate.CandidateName}}</td>
+      <td>{{candidate.CandidateDOB}}</td>
+      <td>{{candidate.CandidateDomain}}</td>
+      <td>{{candidate.CandidateProfileDoc}}</td>
+      <td *ngIf="userService.roleMatch(['Admin'])">
+        <a class="btn" (click)="showForEdit(candidate)">
+          <i class="fa fa-pencil-square-o"></i>
+        </a>
+        <a class="btn text-danger" (click)="onDelete(candidate.CandidateID)">
+          <i class="fa fa-trash-o"></i>
+        </a>
+      </td>
+    </tr>
+  </table>
